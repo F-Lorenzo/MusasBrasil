@@ -28,6 +28,31 @@
 .list-items li{
     margin:30px;
     border-bottom: 5px solid white;
-    color:white;
+    text-align: center;
+    padding-top:15px;
+    height:30px;
+    color: white;
 }
 
+.anunciar{
+    text-align: center;
+    color:#6A033A !important;
+    background-color:white;
+    padding-top:15px;
+    border-bottom:5px solid #6A033A;
+    border-radius:5px;
+    height:30px;
+    width: 120px;
+}
+
+.anunciar:hover{
+    transition:1000ms;
+    text-align: center;
+    color:white !important;
+    background-color:#6A033A;
+    border-bottom:5px solid #6A033A;
+    border-radius:5px;
+    padding-top:15px;
+    height:30px;
+    width: 120px;
+}
