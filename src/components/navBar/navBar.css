@@ -1,0 +1,33 @@
+*{
+    text-decoration: none;
+}
+.navbar{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-around;
+    height: 100px;
+    width: 1920px;
+    background-color: #6A033A;
+    position:absolute;
+    top: 0;
+}
+
+.logo img{
+    border-radius:90px;
+    position: relative;
+    top:55px;
+}
+
+.list-items{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.list-items li{
+    margin:30px;
+    border-bottom: 5px solid white;
+    color:white;
+}
+
