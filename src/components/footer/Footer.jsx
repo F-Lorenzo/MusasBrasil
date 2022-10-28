@@ -13,13 +13,12 @@ function Footer() {
               <img src={Logo} alt="Logo" />
             </div>
             <div className="bussines-name">
-              <h1>bussines's name</h1>
+              <h1>Musas Brasil</h1>
             </div>
           </div>
           <div className="copyright">
             <span>
-              2022 copyright (bussines's name),Brasil sao paulo all rights
-              reserved
+              &copy; Copyright 2022 Musas Brasil,Brasil all rights reserved
             </span>
           </div>
         </div>

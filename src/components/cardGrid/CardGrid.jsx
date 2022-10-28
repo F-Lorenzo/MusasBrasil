@@ -1,9 +1,8 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import Card from "../card/Card";
 
-function CardGrid() {
-  const { Cidade } = useParams();
-  return <div>CardGrid</div>;
+function CardGrid({ props }) {
+  return <div>{<Card props={props} />}</div>;
 }
 
 export default CardGrid;

@@ -25,12 +25,28 @@
     align-items: center;
 }
 
+
+
 .list-items li{
     margin:30px;
     border-bottom: 5px solid white;
     text-align: center;
     padding-top:15px;
     height:30px;
+    color: white;
+}
+
+.list-items-Home{
+    padding-top:5px !important;
+    border-bottom:5px solid #6A033A!important;
+}
+
+.list-items-link{
+    text-decoration: none;
+    color: white;
+}
+
+.list-items-link:hover{
     color: white;
 }
 

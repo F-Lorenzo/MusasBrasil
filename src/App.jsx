@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import firebase from "../firebase.config.js";
 import AdminPanel from "./components/admin/AdminPanel";
 import Navbar from "./components/navBar/Navbar.jsx";
 import GridContainer from "./components/gridContainer/GridContainer";

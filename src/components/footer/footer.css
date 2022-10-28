@@ -23,27 +23,29 @@
 .logo-name{
     display:flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    align-items: center;
+    justify-content: center;
     width: 100%;
 }
 
 .logo-footer img{
     border-radius:50%;
-}
-
-.copyright{
-    font-size:12px;
-    font-weight: light;
+    margin:0px 20px;
 }
 
 .bussines-name{
     display:flex;
     justify-content:center;
     align-items: center;
+    margin:0px 20px;
 }
 
 .bussines-name h1{
     font-size:20px;
+}
+.copyright{
+    font-size:12px;
+    font-weight: light;
 }
 
 .right-container{

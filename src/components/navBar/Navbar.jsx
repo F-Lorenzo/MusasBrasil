@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./navBar.css";
 import logo from "../../assets/logo.jpg";
+import Home from "../../assets/Home.png";
 
 function Navbar() {
   return (
@@ -12,11 +13,20 @@ function Navbar() {
         </Link>
       </div>
       <ul className="list-items">
-        <li>
-          <Link to="/Cidade">CIDADE</Link>
+        <li className="list-items-Home">
+          <Link to="/">
+            <img src={Home} alt="Home" />
+          </Link>
         </li>
         <li>
-          <Link to="/Acompanhantes">ACOMPANHANTES</Link>
+          <Link to="/Cidade" className="list-items-link">
+            CIDADES
+          </Link>
+        </li>
+        <li>
+          <Link to="/Acompanhantes" className="list-items-link">
+            ACOMPANHANTES
+          </Link>
         </li>
         {/* redirije a link de wpp */}
         <li className="anunciar">ANUNCIAR</li>
