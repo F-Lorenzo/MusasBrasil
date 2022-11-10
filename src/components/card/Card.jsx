@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./Card.css";
 
 function Card({ data }) {
+  const tags = data.tags;
   return (
     <div className="card-container">
       <Link to={"/Acompanhante/" + data.id}>
@@ -10,15 +11,11 @@ function Card({ data }) {
           <img src={data.images} alt="" />
         </div>
         <div className="info"></div>
+        <div>{data.name}</div>
         <div className="tags-container">
-          {/* <ul className="tags-list">
-          {data.tags.map((tag) => (
-            <li>{tag.value}</li>
-          ))} */}
-          <li>Tag1</li>
-          <li>tag2</li>
-          <li>tag3</li>
-          {/* </ul> */}
+          {tags.map((tag) => (
+            <li>{tag}</li>
+          ))}
         </div>
       </Link>
     </div>

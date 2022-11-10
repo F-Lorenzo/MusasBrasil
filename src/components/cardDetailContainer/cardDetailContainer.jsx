@@ -5,7 +5,6 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 function cardDetailContainer() {
   const [Acompanhante, setAcompanhante] = useState({});
-
   const { Id } = useParams();
 
   useEffect(() => {

@@ -15,8 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<GridContainer />} />
           <Route path="/Acompanhante" element={<GridContainer />} />
-          <Route path="/Acompanhante:Cidade" element={<GridContainer />} />
-          <Route path="/Acompanhante:Id" element={<CardDetailContainer />} />
+          <Route path="/Acompanhante/:Id" element={<CardDetailContainer />} />
+          <Route path="/Acompanhante/:city" element={<GridContainer />} />
           <Route path="/Admin" element={<AdminPanel />} />
         </Routes>
         <Footer />
