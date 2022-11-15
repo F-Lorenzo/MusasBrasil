@@ -1,0 +1,9 @@
+.register-form{
+    display:flex;
+    width:1150px;
+    height:auto;
+    align-items:center;
+    justify-content:space-around;
+    flex-wrap: wrap;
+    margin:0 auto;
+}
