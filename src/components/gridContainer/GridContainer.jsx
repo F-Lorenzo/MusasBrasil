@@ -48,26 +48,14 @@ function GridContainer() {
   const dataIdade = ["18-24", "24-30", "30+"];
 
   const [filters, setFilters] = useState({
-    anal: true,
-    sexoOralSemCamisinha: true,
-    beijoNaBoca: true,
-    beijoGrego: true,
-    podolatria: true,
+    anal: false,
+    sexoOralSemCamisinha: false,
+    beijoNaBoca: false,
+    beijoGrego: false,
+    podolatria: false,
   });
   const handleOnCheckbox = (e) => {
-    // if (
-    //   filters.anal == false &&
-    //   filters.sexoOralSemCamisinha == false &&
-    //   filters.beijoNaBoca == false &&
-    //   filters.beijoGrego == false &&
-    //   filters.podolatria == false
-    // ) {
-    //   setGrid(fullGrid);
-    // } else {
     setFilters({ ...filters, [e.target.value]: e.target.checked });
-    //   setGrid(fullGrid.filter((data) => filters[data.tags]));
-    // }
-    console.log(grid, "handle");
   };
   return (
     <div className="super-container">
