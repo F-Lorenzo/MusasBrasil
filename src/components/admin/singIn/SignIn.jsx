@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../../../context/AuthContext";
 
 const SignIn = () => {
@@ -12,6 +12,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    console.log("cargado");
     try {
       await signIn(email, password);
       navigate("/createAcompanhante");

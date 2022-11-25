@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./CardDetail.css";
 function CardDetail({ Acompanhante }) {
   const tags = Acompanhante.tags;
@@ -11,18 +12,13 @@ function CardDetail({ Acompanhante }) {
             <div className="name-container">
               {Acompanhante.name} {Acompanhante.lastname}
             </div>
-            <div className="description">
-              <ul>
-                <li>apariencia:</li>
-                <li>peso:</li>
-                <li>Idade:</li>
-                <li>Busto:</li>
-                <li>Cintura:</li>
-                <li>Cuadril:</li>
-              </ul>
-            </div>
+            <div className="description">{Acompanhante.description}</div>
             <div className="contact-button">
-              <button>112233445566</button>
+              <Link
+                to={`https://api.whatsapp.com/send/?phone=55${Acompanhante.phone}&text&type=phone_number&app_absent=0`}
+              >
+                <button>send me a message</button>
+              </Link>
             </div>
           </div>
         </div>

@@ -16,8 +16,6 @@ function GridContainer() {
   const { city } = useParams();
 
   useEffect(() => {
-    setGrid([]);
-
     const db = getFirestore();
 
     const itemCollection = collection(db, "Acompanhantes");
@@ -25,41 +23,51 @@ function GridContainer() {
       collection(db, "Acompanhantes"),
       where("city", "==", `${city}`)
     );
-
     getDocs(!city ? itemCollection : collectionFiltered).then((snapshot) => {
-      setGrid(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      const fullGrid = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(
+        "🚀 ~ file: GridContainer.jsx ~ line 31 ~ fullGrid ~ fullGrid",
+        fullGrid
+      );
+      setGrid(fullGrid);
     });
+
+    console.log(grid, "use");
   }, [city]);
+  console.log(grid);
   const dataCache = [
-    "sin experiencia",
-    "poca experiencia",
-    "con experiencia",
-    "mucha experiencia",
+    " R$ 0 - R$ 150,00",
+    " R$150,00 - R$250,00",
+    " R$250,00 - R$ 400,00",
+    "R$ 400+",
   ];
-  const dataEtnia = ["loiras", "orientais", "morenas", "mulatas", "ruvias"];
-  const dataIdade = ["18-25", "26-30", "31-35", "+35"];
+  const dataEtnia = ["Brancas", "orientais", " Negras", "mulatas"];
+  const dataIdade = ["18-24", "24-30", "30+"];
 
   const [filters, setFilters] = useState({
-    anal: false,
-    sexoOralSemCamisinha: false,
-    beijoNaBoca: false,
-    beijoGrego: false,
+    anal: true,
+    sexoOralSemCamisinha: true,
+    beijoNaBoca: true,
+    beijoGrego: true,
+    podolatria: true,
   });
   const handleOnCheckbox = (e) => {
-    // if (filters.anal === false && filters.sexoOralSemCamisinha === false && filters.beijoNaBoca === false && filters.beijoGrego === false){
-
-    // }
-    // if (e.target.checked) {
-    //   const gridFiltered = grid.filter((data) => data.tags === e.target.value);
-    //   setFilters([...filters, gridFiltered]);
-    // }
-    // else {
-    //   const gridFiltered = filters.filter(
-    //     (data) => data.tags !== e.target.value
-    //   );
-    //   setGrid([...gridFiltered]);
-    // }
+    // if (
+    //   filters.anal == false &&
+    //   filters.sexoOralSemCamisinha == false &&
+    //   filters.beijoNaBoca == false &&
+    //   filters.beijoGrego == false &&
+    //   filters.podolatria == false
+    // ) {
+    //   setGrid(fullGrid);
+    // } else {
     setFilters({ ...filters, [e.target.value]: e.target.checked });
+    //   setGrid(fullGrid.filter((data) => filters[data.tags]));
+    // }
+    console.log(grid, "handle");
   };
   return (
     <div className="super-container">
@@ -150,16 +158,31 @@ function GridContainer() {
                 id="Beijo grego"
               />
             </div>
+            <div className="input-checkbox">
+              <span>podolatria</span>
+              <input
+                onChange={handleOnCheckbox}
+                checked={filters.podolatria}
+                type="checkbox"
+                name="filters"
+                value="podolatria"
+                id="podolatria"
+              />
+            </div>
           </div>
         </div>
       </div>
       <div className="container">
         <div className="grid">
-          {grid
-            .filter((data) => filters[data.tags])
-            .map((data) => (
-              <Card key={data.id} data={data} />
-            ))}
+          {filters.anal == false &&
+          filters.sexoOralSemCamisinha == false &&
+          filters.beijoNaBoca == false &&
+          filters.beijoGrego == false &&
+          filters.podolatria == false
+            ? grid.map((data) => <Card key={data.id} data={data} />)
+            : grid
+                .filter((data) => filters[data.tags])
+                .map((data) => <Card key={data.id} data={data} />)}
         </div>
       </div>
     </div>

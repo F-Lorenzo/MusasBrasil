@@ -14,30 +14,19 @@ function App() {
     <>
       <BrowserRouter>
         <Navbar />
-        <AuthContextProvider>
-          <Routes>
-            <Route path="/" element={<GridContainer />} />
-            <Route path="/Acompanhante" element={<GridContainer />} />
-            <Route path="/Acompanhante/:Id" element={<CardDetailContainer />} />
-            <Route path="/Acompanhante/:city" element={<GridContainer />} />
-            <Route
-              path="/Admin"
-              element={
-                <ProtectedRoute>
-                  <SignIn />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/createAcompanhante"
-              element={
-                <ProtectedRoute>
-                  <AcompanhanteCreation />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </AuthContextProvider>
+
+        <Routes>
+          <Route path="/" element={<GridContainer />} />
+          <Route path="/Acompanhante" element={<GridContainer />} />
+          <Route path="/Acompanhante/:Id" element={<CardDetailContainer />} />
+          <Route path="/Acompanhante/:city" element={<GridContainer />} />
+          <Route path="/Admin" element={<SignIn />} />
+          <Route
+            path="/createAcompanhante"
+            element={<AcompanhanteCreation />}
+          />
+        </Routes>
+
         <Footer />
       </BrowserRouter>
     </>

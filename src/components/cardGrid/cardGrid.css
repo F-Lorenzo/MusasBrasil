@@ -2,7 +2,6 @@
     display:flex;
     margin-top:100px;
     height:auto;
-    border: 1px solid black;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -13,6 +12,5 @@
     flex-flow: wrap;
     width:1150px;
     height:auto;
-    border: 1px solid red;
     justify-content: flex-start;
 }

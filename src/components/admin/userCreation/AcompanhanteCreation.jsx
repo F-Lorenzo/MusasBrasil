@@ -1,31 +1,35 @@
 import React, { useState, useEffect } from "react";
-import {
-  addDoc,
-  setDoc,
-  collection,
-  getFirestore,
-  doc,
-  query,
-  getDocs,
-} from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { setDoc, getFirestore, doc } from "firebase/firestore";
 
 function AcompanhanteCreation() {
-  const [newUser, setNewUser] = useState({});
+  const [form, setForm] = useState({});
 
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const db = getFirestore();
+      const dbRef = doc(db, "Acompanhantes");
+      setDoc(dbRef, ...form);
+
+      navigate("/admin");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <form className="register-form" onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name">Name :</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={newUser.name || ""}
-          onChange={handleChange}
-        />
-      </div>
       <div>
         {" "}
         <label htmlFor="name">Name :</label>
@@ -33,7 +37,7 @@ function AcompanhanteCreation() {
           type="text"
           id="name"
           name="name"
-          value={newUser.name || ""}
+          value={form.name || ""}
           onChange={handleChange}
         />
       </div>
@@ -44,7 +48,7 @@ function AcompanhanteCreation() {
           type="text"
           id="lastName"
           name="lastName"
-          value={newUser.lastName || ""}
+          value={form.lastName || ""}
           onChange={handleChange}
         />
       </div>
@@ -55,7 +59,7 @@ function AcompanhanteCreation() {
           type="city"
           id="city"
           name="city"
-          value={newUser.city || ""}
+          value={form.city || ""}
           onChange={handleChange}
         />
       </div>
@@ -66,18 +70,7 @@ function AcompanhanteCreation() {
           type="idade"
           id="idade"
           name="idade"
-          value={newUser.idade || ""}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        {" "}
-        <label htmlFor="cache">cache :</label>
-        <input
-          type="cache"
-          id="cache"
-          name="cache"
-          value={newUser.cache || ""}
+          value={form.idade || ""}
           onChange={handleChange}
         />
       </div>
@@ -87,7 +80,7 @@ function AcompanhanteCreation() {
           type="tags"
           id="tags"
           name="tags"
-          value={newUser.tags || ""}
+          value={form.tags || ""}
           onChange={handleChange}
         />
       </div>
@@ -98,7 +91,7 @@ function AcompanhanteCreation() {
           type="etnia"
           id="etnia"
           name="etnia"
-          value={newUser.etnia || ""}
+          value={form.etnia || ""}
           onChange={handleChange}
         />
       </div>
@@ -109,7 +102,7 @@ function AcompanhanteCreation() {
           type="textarea"
           id="description"
           name="description"
-          value={newUser.description || ""}
+          value={form.description || ""}
           onChange={handleChange}
         />
       </div>
@@ -120,50 +113,7 @@ function AcompanhanteCreation() {
           type="apariencia"
           id="apariencia"
           name="apariencia"
-          value={newUser.apariencia || ""}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        {" "}
-        <label htmlFor="peso">peso :</label>
-        <input
-          type="peso"
-          id="peso"
-          name="peso"
-          value={newUser.peso || ""}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        {" "}
-        <label htmlFor="busto">busto :</label>
-        <input
-          type="busto"
-          id="busto"
-          name="busto"
-          value={newUser.busto || ""}
-          onChange={handleChange}
-        />{" "}
-      </div>
-      <div>
-        <label htmlFor="cintura">cintura :</label>
-        <input
-          type="cintura"
-          id="cintura"
-          name="cintura"
-          value={newUser.cintura || ""}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        {" "}
-        <label htmlFor="cuadril">cuadril :</label>
-        <input
-          type="cuadril"
-          id="cuadril"
-          name="cuadril"
-          value={newUser.cuadril || ""}
+          value={form.apariencia || ""}
           onChange={handleChange}
         />
       </div>
@@ -175,10 +125,11 @@ function AcompanhanteCreation() {
           type="file"
           id="images"
           name="images"
-          value={newUser.images || ""}
+          value={form.images || ""}
           onChange={handleChange}
         />
       </div>
+      <button type="submit">crear Acompanhante</button>
     </form>
   );
 }
