@@ -8,6 +8,7 @@ import CardDetailContainer from "./components/cardDetailContainer/cardDetailCont
 import Footer from "./components/footer/Footer";
 import AcompanhanteCreation from "./components/admin/userCreation/AcompanhanteCreation";
 import SignIn from "./components/admin/singIn/SignIn";
+// import AdminPanel from "./components/admin/AdminPanel";
 
 function App() {
   return (
@@ -19,8 +20,12 @@ function App() {
           <Route path="/" element={<GridContainer />} />
           <Route path="/Acompanhante" element={<GridContainer />} />
           <Route path="/Acompanhante/:Id" element={<CardDetailContainer />} />
-          <Route path="/Acompanhante/:city" element={<GridContainer />} />
-          <Route path="/Admin" element={<SignIn />} />
+          <Route
+            path="/Acompanhante/:city?/:cache?/:idade?/:etnia?"
+            element={<CardDetailContainer />}
+          />
+          <Route path="/SingIn" element={<SignIn />} />
+          {/* <Route path="/AdminPanel" element={<AdminPanel />} /> */}
           <Route
             path="/createAcompanhante"
             element={<AcompanhanteCreation />}

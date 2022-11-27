@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { addDoc, getFirestore, collection } from "firebase/firestore";
 
-function AcompanhanteCreation() {
+function UserUpdate() {
   const [form, setForm] = useState({});
 
   const navigate = useNavigate();
@@ -141,4 +141,4 @@ function AcompanhanteCreation() {
   );
 }
 
-export default AcompanhanteCreation;
+export default UserUpdate;

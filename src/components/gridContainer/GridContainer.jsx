@@ -13,31 +13,88 @@ import Card from "../card/Card";
 
 function GridContainer() {
   const [grid, setGrid] = useState([]);
-  const { city } = useParams();
+  const { city, etnia, idade, cache } = useParams();
+  const lowIndex = 0;
+  const highIndex = 6;
+  const handleSuma = () => {
+    lowIndex + 6 && highIndex + 6;
+    console.log(
+      "🚀 ~ file: GridContainer.jsx ~ line 19 ~ GridContainer ~ highIndex",
+      highIndex
+    );
+    console.log(
+      "🚀 ~ file: GridContainer.jsx ~ line 18 ~ GridContainer ~ lowIndex",
+      lowIndex
+    );
+  };
+
+  const handleResta = () => {
+    lowIndex - 6 && highIndex - 6;
+    console.log(
+      "🚀 ~ file: GridContainer.jsx ~ line 19 ~ GridContainer ~ highIndex",
+      highIndex
+    );
+    console.log(
+      "🚀 ~ file: GridContainer.jsx ~ line 18 ~ GridContainer ~ lowIndex",
+      lowIndex
+    );
+  };
 
   useEffect(() => {
     const db = getFirestore();
 
     const itemCollection = collection(db, "Acompanhantes");
-    const collectionFiltered = query(
+    //city filter
+    const collectionFilteredCity = query(
       collection(db, "Acompanhantes"),
       where("city", "==", `${city}`)
     );
-    getDocs(!city ? itemCollection : collectionFiltered).then((snapshot) => {
-      const fullGrid = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      console.log(
-        "🚀 ~ file: GridContainer.jsx ~ line 31 ~ fullGrid ~ fullGrid",
-        fullGrid
-      );
-      setGrid(fullGrid);
-    });
+    //age filter
+    const collectionFilteredIdadeYunger = query(
+      collection(db, "Acompanhantes"),
+      where("Idade", "<=", `24`)
+    );
+    const collectionFilteredIdadeMidle = query(
+      collection(db, "Acompanhantes"),
+      where("Idade", ">", `24`, "Idade", "<=", `30`)
+    );
+    const collectionFilteredIdadeOld = query(
+      collection(db, "Acompanhantes"),
+      where("Idade", ">", `30`)
+    );
+    //etnia filter
+    const collectionFilteredEtnia = query(
+      collection(db, "Acompanhantes"),
+      where("etnia", "==", `${etnia}`)
+    );
+    //cache filter
+    const collectionFilteredCacheCheap = query(
+      collection(db, "Acompanhantes"),
+      where("cache", "<=", `150`)
+    );
+    const collectionFilteredCacheLowMidlle = query(
+      collection(db, "Acompanhantes"),
+      where("cache", ">", `150`, "cache", "<=", `250`)
+    );
+    const collectionFilteredCacheMidle = query(
+      collection(db, "Acompanhantes"),
+      where("cache", ">", `250`, "cache", "<=", `400`)
+    );
+    const collectionFilteredCacheExpensive = query(
+      collection(db, "Acompanhantes"),
+      where("cache", ">", `400`)
+    );
 
-    console.log(grid, "use");
-  }, [city]);
-  console.log(grid);
+    getDocs(!city ? itemCollection : collectionFilteredCity).then(
+      (snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid);
+      }
+    );
+  }, [city, etnia, idade, cache]);
   const dataCache = [
     " R$ 0 - R$ 150,00",
     " R$150,00 - R$250,00",
@@ -167,10 +224,19 @@ function GridContainer() {
           filters.beijoNaBoca == false &&
           filters.beijoGrego == false &&
           filters.podolatria == false
-            ? grid.map((data) => <Card key={data.id} data={data} />)
+            ? grid
+                // .slice(lowIndex, highIndex)
+                .map((data) => <Card key={data.id} data={data} />)
             : grid
+                // .slice(lowIndex, highIndex)
                 .filter((data) => filters[data.tags])
                 .map((data) => <Card key={data.id} data={data} />)}
+        </div>
+        <div className="page-handler">
+          <button disabled={lowIndex <= 0} onClick={handleResta}>
+            back page
+          </button>
+          <button onClick={handleSuma}>next page</button>
         </div>
       </div>
     </div>
