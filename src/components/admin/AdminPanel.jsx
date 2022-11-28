@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "react-router-dom";
 import "./adminPanel.css";
 import SingIn from "./singIn/SignIn";
-import AcompanhanteCreation from "./userCreation/OldAcompanhanteCreation";
+import AcompanhanteCreation from "./userCreation/AcompanhanteCreation";
 
 function AdminPanel() {
   return (

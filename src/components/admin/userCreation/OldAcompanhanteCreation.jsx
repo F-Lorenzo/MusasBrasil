@@ -1,51 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { addDoc, getFirestore, collection } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../../firebase.config.js";
 
-const initialState = {
-  name: "",
-  lastName: "",
-  phone: "",
-  idade: "",
-  description: "",
-  tags: "",
-  images: "",
-};
-
-function AcompanhanteCreation() {
-  const [form, setForm] = useState(initialState);
+function OldAcompanhanteCreation() {
+  const [form, setForm] = useState({});
   const { name, lastName, phone, idade, description, tags } = form;
   const [file, setFile] = useState(null);
 
-  useEffect(() => {
-    // const name = new Date().getTime() + "-" + file.name;
-    const storageRef = ref(storage, `images/${name}`);
-    const uploadTask = uploadBytes(storageRef, file);
-    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      setForm({ ...form, images: downloadURL });
-    });
-  }, [file]);
+  const navigate = useNavigate();
 
-  const handleChange = () => {
+  const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const db = getFirestore();
       const dbRef = collection(db, "Acompanhantes");
       addDoc(dbRef, { ...form });
+
+      // navigate("/admin");
     } catch (e) {
       console.log(e);
     }
-    console.log(form, "form");
   };
+  useEffect(() => {
+    const storageRef = ref(storage, `images/${name}+${lastName}`);
+    const uploadTask = uploadBytes(storageRef, file);
+    getDownloadURL(ref(storage, `images/${name}`)).then((downloadURL) => {
+      setForm({ ...form, images: downloadURL });
+    });
+  }, [file]);
+
   return (
     <form className="register-form" onSubmit={handleSubmit}>
       <div>
@@ -146,7 +139,6 @@ function AcompanhanteCreation() {
         {" "}
         <label htmlFor="images">images :</label>
         <input
-          multiple
           accept="/images"
           type="file"
           id="images"
@@ -159,4 +151,4 @@ function AcompanhanteCreation() {
   );
 }
 
-export default AcompanhanteCreation;
+export default OldAcompanhanteCreation;
