@@ -8,10 +8,10 @@ function Card({ data }) {
     <div className="card-container">
       <Link to={"/Acompanhante/" + data.id}>
         <div className="card-img">
-          <img src={data.images} alt="" />
+          <img src={data.images} alt={data.name} />
         </div>
         <div className="info"></div>
-        <div>
+        <div className="card-name">
           {data.name} {data.lastname}
         </div>
         <div className="card-description">{data.description}</div>

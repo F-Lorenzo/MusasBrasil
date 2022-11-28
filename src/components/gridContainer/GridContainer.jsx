@@ -13,31 +13,21 @@ import Card from "../card/Card";
 
 function GridContainer() {
   const [grid, setGrid] = useState([]);
+  const [lowIndex, setLowIndex] = useState(0);
+  const [highIndex, setHighIndex] = useState(6);
+  const [page, setPage] = useState(1);
   const { city, etnia, idade, cache } = useParams();
-  const lowIndex = 0;
-  const highIndex = 6;
-  const handleSuma = () => {
-    lowIndex + 6 && highIndex + 6;
-    console.log(
-      "🚀 ~ file: GridContainer.jsx ~ line 19 ~ GridContainer ~ highIndex",
-      highIndex
-    );
-    console.log(
-      "🚀 ~ file: GridContainer.jsx ~ line 18 ~ GridContainer ~ lowIndex",
-      lowIndex
-    );
+
+  const pagIncrement = () => {
+    setLowIndex(lowIndex + 6);
+    setHighIndex(highIndex + 6);
+    setPage(page + 1);
   };
 
-  const handleResta = () => {
-    lowIndex - 6 && highIndex - 6;
-    console.log(
-      "🚀 ~ file: GridContainer.jsx ~ line 19 ~ GridContainer ~ highIndex",
-      highIndex
-    );
-    console.log(
-      "🚀 ~ file: GridContainer.jsx ~ line 18 ~ GridContainer ~ lowIndex",
-      lowIndex
-    );
+  const pagDecrement = () => {
+    setLowIndex(lowIndex - 6);
+    setHighIndex(highIndex - 6);
+    page < 1 ? setPage(1) : setPage(page - 1);
   };
 
   useEffect(() => {
@@ -52,15 +42,15 @@ function GridContainer() {
     //age filter
     const collectionFilteredIdadeYunger = query(
       collection(db, "Acompanhantes"),
-      where("Idade", "<=", `24`)
+      where(`${idade}`, "<=", `24`)
     );
     const collectionFilteredIdadeMidle = query(
       collection(db, "Acompanhantes"),
-      where("Idade", ">", `24`, "Idade", "<=", `30`)
+      where(`${idade}`, ">", `24`, `${idade}`, "<=", `30`)
     );
     const collectionFilteredIdadeOld = query(
       collection(db, "Acompanhantes"),
-      where("Idade", ">", `30`)
+      where(`${idade}`, ">", `30`)
     );
     //etnia filter
     const collectionFilteredEtnia = query(
@@ -70,19 +60,19 @@ function GridContainer() {
     //cache filter
     const collectionFilteredCacheCheap = query(
       collection(db, "Acompanhantes"),
-      where("cache", "<=", `150`)
+      where(`${cache}`, "<=", `150`)
     );
     const collectionFilteredCacheLowMidlle = query(
       collection(db, "Acompanhantes"),
-      where("cache", ">", `150`, "cache", "<=", `250`)
+      where(`${cache}`, ">", `150`, `${cache}`, "<=", `250`)
     );
     const collectionFilteredCacheMidle = query(
       collection(db, "Acompanhantes"),
-      where("cache", ">", `250`, "cache", "<=", `400`)
+      where(`${cache}`, ">", `250`, `${cache}`, "<=", `400`)
     );
     const collectionFilteredCacheExpensive = query(
       collection(db, "Acompanhantes"),
-      where("cache", ">", `400`)
+      where(`${cache}`, ">", `400`)
     );
 
     getDocs(!city ? itemCollection : collectionFilteredCity).then(
@@ -91,7 +81,7 @@ function GridContainer() {
           id: doc.id,
           ...doc.data(),
         }));
-        setGrid(fullGrid);
+        setGrid(fullGrid.sort(() => 0.5 - Math.random()));
       }
     );
   }, [city, etnia, idade, cache]);
@@ -156,64 +146,61 @@ function GridContainer() {
           </div>
         </div>
         <div className="filter-checkbox">
-          <div className="arriba">
-            <div className="input-checkbox">
-              <span>Anal</span>
-              <input
-                onChange={handleOnCheckbox}
-                checked={filters.anal}
-                type="checkbox"
-                name="filters"
-                value="anal"
-                id="Anal"
-              />
-            </div>
-            <div className="input-checkbox">
-              <span>Sexo oral Sem camisinha</span>
-              <input
-                onChange={handleOnCheckbox}
-                checked={filters.sexoOralSemCamisinha}
-                type="checkbox"
-                name="filters"
-                value="sexoOralSemCamisinha"
-                id="Sexo oral Sem camisinha"
-              />
-            </div>
+          <div className="input-checkbox">
+            <span>Anal</span>
+            <input
+              onChange={handleOnCheckbox}
+              checked={filters.anal}
+              type="checkbox"
+              name="filters"
+              value="anal"
+              id="Anal"
+            />
           </div>
-          <div className="abajo">
-            <div className="input-checkbox">
-              <span>Beijo na boca</span>
-              <input
-                onChange={handleOnCheckbox}
-                checked={filters.beijoNaBoca}
-                type="checkbox"
-                name="filters"
-                value="beijoNaBoca"
-                id="Beijo na boca"
-              />
-            </div>
-            <div className="input-checkbox">
-              <span>Beijo grego</span>
-              <input
-                onChange={handleOnCheckbox}
-                checked={filters.beijoGrego}
-                type="checkbox"
-                name="filters"
-                value="beijoGrego"
-                id="Beijo grego"
-              />
-            </div>
-            <div className="input-checkbox">
-              <span>podolatria</span>
-              <input
-                onChange={handleOnCheckbox}
-                checked={filters.podolatria}
-                type="checkbox"
-                name="filters"
-                value="podolatria"
-                id="podolatria"
-              />
-            </div>
+          <div className="input-checkbox">
+            <span>Sexo oral Sem camisinha</span>
+            <input
+              onChange={handleOnCheckbox}
+              checked={filters.sexoOralSemCamisinha}
+              type="checkbox"
+              name="filters"
+              value="sexoOralSemCamisinha"
+              id="Sexo oral Sem camisinha"
+            />
+          </div>
+
+          <div className="input-checkbox">
+            <span>Beijo na boca</span>
+            <input
+              onChange={handleOnCheckbox}
+              checked={filters.beijoNaBoca}
+              type="checkbox"
+              name="filters"
+              value="beijoNaBoca"
+              id="Beijo na boca"
+            />
+          </div>
+          <div className="input-checkbox">
+            <span>Beijo grego</span>
+            <input
+              onChange={handleOnCheckbox}
+              checked={filters.beijoGrego}
+              type="checkbox"
+              name="filters"
+              value="beijoGrego"
+              id="Beijo grego"
+            />
+          </div>
+          <div className="input-checkbox">
+            <span>podolatria</span>
+            <input
+              onChange={handleOnCheckbox}
+              checked={filters.podolatria}
+              type="checkbox"
+              name="filters"
+              value="podolatria"
+              id="podolatria"
+            />
           </div>
         </div>
       </div>
@@ -225,18 +212,25 @@ function GridContainer() {
           filters.beijoGrego == false &&
           filters.podolatria == false
             ? grid
-                // .slice(lowIndex, highIndex)
+                .slice(lowIndex, highIndex)
                 .map((data) => <Card key={data.id} data={data} />)
             : grid
-                // .slice(lowIndex, highIndex)
+                .slice(lowIndex, highIndex)
                 .filter((data) => filters[data.tags])
                 .map((data) => <Card key={data.id} data={data} />)}
         </div>
         <div className="page-handler">
-          <button disabled={lowIndex <= 0} onClick={handleResta}>
+          <button
+            className="button-page"
+            disabled={lowIndex <= 0}
+            onClick={pagDecrement}
+          >
             back page
           </button>
-          <button onClick={handleSuma}>next page</button>
+          <div className="page-number">{page}</div>
+          <button className="button-page" onClick={pagIncrement}>
+            next page
+          </button>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import Navbar from "./components/navBar/Navbar.jsx";
 import GridContainer from "./components/gridContainer/GridContainer";
 import CardDetailContainer from "./components/cardDetailContainer/cardDetailContainer";
 import Footer from "./components/footer/Footer";
-import AcompanhanteCreation from "./components/admin/userCreation/AcompanhanteCreation";
+import AcompanhanteCreation from "./components/admin/userCreation/OldAcompanhanteCreation";
 import SignIn from "./components/admin/singIn/SignIn";
 // import AdminPanel from "./components/admin/AdminPanel";
 

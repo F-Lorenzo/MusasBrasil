@@ -1,44 +1,51 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addDoc, getFirestore, collection } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../../firebase.config.js";
 
-function AcompanhanteCreation() {
-  const [form, setForm] = useState({});
-  const navigate = useNavigate();
+const initialState = {
+  name: "",
+  lastName: "",
+  phone: "",
+  idade: "",
+  description: "",
+  tags: "",
+  images: "",
+};
 
-  let urlDescarga;
-  const handleChange = (e) => {
+function AcompanhanteCreation() {
+  const [form, setForm] = useState(initialState);
+  const { name, lastName, phone, idade, description, tags } = form;
+  const [file, setFile] = useState(null);
+
+  useEffect(() => {
+    // const name = new Date().getTime() + "-" + file.name;
+    const storageRef = ref(storage, `images/${name}`);
+    const uploadTask = uploadBytes(storageRef, file);
+    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      setForm({ ...form, images: downloadURL });
+    });
+  }, [file]);
+
+  const handleChange = () => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = () => {
     e.preventDefault();
-
     try {
       const db = getFirestore();
       const dbRef = collection(db, "Acompanhantes");
       addDoc(dbRef, { ...form });
-
-      // navigate("/admin");
     } catch (e) {
       console.log(e);
     }
+    console.log(form, "form");
   };
-  const archivoHandler = async (e) => {
-    const archivo = e.target.files[0];
-    const storageRef = app.storage().ref();
-    const archivoPath = storageRef.child(archivo.name);
-    await archivoPath.put(archivo);
-    console.log("archivo cargado:", archivo.name);
-    const enlaceUrl = await archivoPath.getDownloadURL();
-    setArchivoUrl(enlaceUrl);
-  };
-
   return (
     <form className="register-form" onSubmit={handleSubmit}>
       <div>
@@ -139,12 +146,12 @@ function AcompanhanteCreation() {
         {" "}
         <label htmlFor="images">images :</label>
         <input
+          multiple
           accept="/images"
           type="file"
           id="images"
           name="images"
-          value={form.images || ""}
-          onChange={handleChange}
+          onChange={(e) => setFile(e.target.files[0])}
         />
       </div>
       <button type="submit">crear Acompanhante</button>
