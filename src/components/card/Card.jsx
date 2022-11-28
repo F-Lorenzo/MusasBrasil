@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Card.css";
 
 function Card({ data }) {
-  // const tags = data.tags;
+  const tags = data.tags;
   return (
     <div className="card-container">
       <Link to={"/Acompanhante/" + data.id}>
@@ -16,9 +16,9 @@ function Card({ data }) {
         </div>
         <div className="card-description">{data.description}</div>
         <div className="tags-container">
-          {/* {tags.map((tag) => {
+          {tags.map((tag) => {
             return <div className="tag">{tag}</div>;
-          })} */}
+          })}
         </div>
       </Link>
     </div>

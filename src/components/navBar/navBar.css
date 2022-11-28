@@ -72,3 +72,28 @@
     height:30px;
     width: 120px;
 }
+
+@media (max-width:850px) {
+    .navbar{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:space-around;
+        height: auto;
+        width: 100%;
+        background-color: #6A033A;
+        position:absolute;
+        top: 0;
+    }
+    .list-items{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .logo img{
+        border-radius:90px;
+        position: relative;
+        top:7vw;
+        left:3vw;
+    }
+}

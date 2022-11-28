@@ -65,3 +65,99 @@
 .tags-list li{
     text-decoration: none;
 }
+
+@media (min-width: 850px) and  (max-width:1200px) {
+    .gallery-description{
+        display:flex;
+        justify-content:center;
+        flex-direction:column;
+    }
+    .card-detail{
+        display:flex;
+        justify-content:center;
+        width:70vw;
+        height:auto;
+        flex-direction: column;
+        border: 2px solid blue
+    }
+    .gallery{
+        width:60vw;
+        height:50vh;
+        margin: 0 auto;
+        /* height: auto; la altura es de 500 px solo para maqueta*/ 
+        border: 2px solid yellow;
+    }
+    .description-container{
+        width:60vw;
+        height:20vh;
+        /* height: auto; la altura es de 500 px solo para maqueta*/ 
+        border: 2px solid red;
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction: column;
+        margin: 0 auto;
+    }
+    .tags-list{
+        display:flex;
+        justify-content:flex-start;
+        align-items:center;
+        flex-direction:row;
+        padding:30px;
+        width:60vw;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 850px) {
+    .card-detail-container{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width: 100%;
+        height:auto;
+        margin: 70vh 0px 0px 0px;
+    }
+    .card-detail{
+        display:flex;
+        justify-content:center;
+        width:70vw;
+        height:auto;
+        flex-direction: column;
+        border: 2px solid blue
+    }
+    .gallery-description{
+        display:flex;
+        justify-content:center;
+        flex-direction:column;
+    }
+    .gallery{
+        width:60vw;
+        height:30vh;
+        margin: 0 auto;
+        /* height: auto; la altura es de 500 px solo para maqueta*/ 
+        border: 2px solid yellow;
+    }
+    .description-container{
+        width:60vw;
+        height:20vh;
+        /* height: auto; la altura es de 500 px solo para maqueta*/ 
+        border: 2px solid red;
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction: column;
+        margin: 0 auto;
+    }
+    .tags-list{
+        display:flex;
+        justify-content:flex-start;
+        align-items:center;
+        flex-direction:column;
+        padding:30px;
+        width:60vw;
+        margin: 0 auto;
+    }
+
+}
+    

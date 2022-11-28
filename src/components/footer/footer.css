@@ -5,7 +5,7 @@
     align-items: center;
     background-color:#6A033A;
     height:200px;
-    width:100%;
+    width:99.1vw;
     margin: 0px;
     color:white;
 }
@@ -15,7 +15,7 @@
     flex-direction: column;
     justify-content:center;
     align-items:center;
-    width:50%;
+    width:100%;
 }
 
 .logo-name{
@@ -52,7 +52,7 @@
     justify-content: center;
     align-items: center;
     height: 200px;
-    width:50%;
+    width:100%;
 }
 
 .description{

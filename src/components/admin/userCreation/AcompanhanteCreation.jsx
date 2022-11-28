@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { addDoc, getFirestore, collection } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../../firebase.config.js";
 
 function AcompanhanteCreation() {
   const [form, setForm] = useState({});
-
   const navigate = useNavigate();
 
+  let urlDescarga;
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -26,6 +28,15 @@ function AcompanhanteCreation() {
     } catch (e) {
       console.log(e);
     }
+  };
+  const archivoHandler = async (e) => {
+    const archivo = e.target.files[0];
+    const storageRef = app.storage().ref();
+    const archivoPath = storageRef.child(archivo.name);
+    await archivoPath.put(archivo);
+    console.log("archivo cargado:", archivo.name);
+    const enlaceUrl = await archivoPath.getDownloadURL();
+    setArchivoUrl(enlaceUrl);
   };
 
   return (
@@ -89,7 +100,7 @@ function AcompanhanteCreation() {
         />
       </div>
       <div>
-        <label htmlFor="tags">tags :</label>
+        <label htmlFor="tags">tags:</label>
         <input
           required
           type="tags"

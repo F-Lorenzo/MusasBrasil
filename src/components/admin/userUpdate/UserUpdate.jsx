@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { addDoc, getFirestore, collection } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 
 function UserUpdate() {
   const [form, setForm] = useState({});
+  const [userId, setUserId] = useState({});
 
   const navigate = useNavigate();
 
@@ -16,19 +23,27 @@ function UserUpdate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const db = getFirestore();
-      const dbRef = collection(db, "Acompanhantes");
-      addDoc(dbRef, { ...form });
-
-      // navigate("/admin");
-    } catch (e) {
-      console.log(e);
-    }
+    const userRef = query(
+      collection(db, "Acompanhantes"),
+      where("uid", "==", `${userId}`)
+    );
+    const findUsers = await getDocs(userRef);
+    findUsers.forEach(async (Acompanhante) => {
+      const getUser = doc(db, "Acompanhantes", Acompanhante.uid);
+      await updateDoc(getUser, {
+        name: form.name,
+        lastName: form.lastName,
+        phone: form.phone,
+        idade: form.idade,
+        description: form.description,
+        tags: form.tags,
+        images: form.images,
+      });
+    });
   };
 
   return (
+    
     <form className="register-form" onSubmit={handleSubmit}>
       <div>
         {" "}

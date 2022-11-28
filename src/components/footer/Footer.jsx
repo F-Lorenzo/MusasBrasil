@@ -22,7 +22,7 @@ function Footer() {
             </span>
           </div>
         </div>
-        <div className="right-container">
+        {/* <div className="right-container">
           <p className="description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
             vulputate, neque vitae facilisis ultricies, sapien nisi gravida
@@ -52,7 +52,7 @@ function Footer() {
               </a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </>
   );
