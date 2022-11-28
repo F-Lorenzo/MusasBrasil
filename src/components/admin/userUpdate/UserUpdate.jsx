@@ -43,7 +43,6 @@ function UserUpdate() {
   };
 
   return (
-    
     <form className="register-form" onSubmit={handleSubmit}>
       <div>
         {" "}

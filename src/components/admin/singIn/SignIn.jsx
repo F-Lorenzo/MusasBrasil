@@ -1,46 +1,32 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { GoogleButton } from "react-google-button";
 import { UserAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const googleSignIn = UserAuth().googleSignIn;
+  const user = UserAuth().user;
   const navigate = useNavigate();
-  const { signIn } = UserAuth();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    console.log("cargado");
+  const handleGoogleSignIn = async () => {
     try {
-      await signIn(email, password);
-      navigate("/createAcompanhante");
-    } catch (e) {
-      setError(e.message);
-      console.log(e.message);
+      await googleSignIn();
+      user ? navigate("/AdminPanel") : navigate("/");
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
-    <div c>
-      <div>
-        <h1>Sign in to your account</h1>
+    <div>
+      <h1 className="">Sign in</h1>
+      <div className="">
+        <GoogleButton onClick={handleGoogleSignIn} />
+        <Link to={"/AdminPanel"}>
+          <button>Admin panel</button>
+        </Link>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email </label>
-          <input onChange={(e) => setEmail(e.target.value)} type="email" />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-          />
-        </div>
-        <button>Sign In</button>
-      </form>
     </div>
   );
 };

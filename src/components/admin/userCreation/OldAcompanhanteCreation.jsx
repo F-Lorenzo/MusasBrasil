@@ -1,15 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { addDoc, getFirestore, collection } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  addDoc,
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+} from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../../firebase.config.js";
+import { db } from "../../../../firebase.config.js";
 
 function OldAcompanhanteCreation() {
   const [form, setForm] = useState({});
-  const { name, lastName, phone, idade, description, tags } = form;
-  const [file, setFile] = useState(null);
-
+  const { name, lastname, city, etnia, phone, idade, description, tags } = form;
+  const [file, setFile] = useState([]);
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const db = getFirestore();
+    const acompanhanteRef = query(
+      collection(db, "Acompanhantes"),
+      where("id", "==", `${id}`)
+    );
+    getDocs(acompanhanteRef).then((snapshot) => {
+      (snapshot) => {
+        setForm(
+          snapshot.docs({
+            id: doc.id,
+            ...doc.data(),
+          })
+        );
+      };
+    });
+  }, [id]);
 
   const handleChange = (e) => {
     setForm({
@@ -26,23 +53,119 @@ function OldAcompanhanteCreation() {
       const dbRef = collection(db, "Acompanhantes");
       addDoc(dbRef, { ...form });
 
-      // navigate("/admin");
+      navigate("/adminPanel");
     } catch (e) {
       console.log(e);
     }
   };
   useEffect(() => {
-    const storageRef = ref(storage, `images/${name}+${lastName}`);
+    const storageRef = ref(storage, `images/${name}`);
     const uploadTask = uploadBytes(storageRef, file);
     getDownloadURL(ref(storage, `images/${name}`)).then((downloadURL) => {
-      setForm({ ...form, images: downloadURL });
+      setForm({ ...form, tags: [tags], images: [downloadURL] });
     });
   }, [file]);
 
-  return (
+  return id ? (
     <form className="register-form" onSubmit={handleSubmit}>
       <div>
-        {" "}
+        <label htmlFor="name">Name :</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={name}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="lastname">Last name :</label>
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          value={lastname}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="phone">phone :</label>
+        <input
+          type="phone"
+          id="phone"
+          name="phone"
+          value={phone}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="city">city :</label>
+        <input
+          type="city"
+          id="city"
+          name="city"
+          value={city}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="idade">idade :</label>
+        <input
+          type="idade"
+          id="idade"
+          name="idade"
+          value={idade}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="tags">tags:</label>
+        <input
+          type="tags"
+          id="tags"
+          name="tags"
+          value={tags}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="etnia">etnia :</label>
+        <input
+          type="etnia"
+          id="etnia"
+          name="etnia"
+          value={etnia}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="description">description :</label>
+        <textarea
+          rows="10"
+          cols="50"
+          type="description"
+          id="description"
+          name="description"
+          value={description}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="images">images :</label>
+        <input
+          multiple
+          accept="/images"
+          type="file"
+          id="images"
+          name="images"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+      </div>
+      <button type="submit">crear Acompanhante</button>
+    </form>
+  ) : (
+    <form className="register-form" onSubmit={handleSubmit}>
+      <div>
         <label htmlFor="name">Name :</label>
         <input
           required
@@ -54,14 +177,13 @@ function OldAcompanhanteCreation() {
         />
       </div>
       <div>
-        {" "}
-        <label htmlFor="lastName">Last name :</label>
+        <label htmlFor="lastname">Last name :</label>
         <input
           required
           type="text"
-          id="lastName"
-          name="lastName"
-          value={form.lastName || ""}
+          id="lastname"
+          name="lastname"
+          value={form.lastname || ""}
           onChange={handleChange}
         />
       </div>
@@ -77,7 +199,6 @@ function OldAcompanhanteCreation() {
         />
       </div>
       <div>
-        {" "}
         <label htmlFor="city">city :</label>
         <input
           required
@@ -89,7 +210,6 @@ function OldAcompanhanteCreation() {
         />
       </div>
       <div>
-        {" "}
         <label htmlFor="idade">idade :</label>
         <input
           type="idade"
@@ -106,12 +226,11 @@ function OldAcompanhanteCreation() {
           type="tags"
           id="tags"
           name="tags"
-          value={form.tags || ""}
+          value={form.tags || []}
           onChange={handleChange}
         />
       </div>
       <div>
-        {" "}
         <label htmlFor="etnia">etnia :</label>
         <input
           type="etnia"
@@ -122,7 +241,6 @@ function OldAcompanhanteCreation() {
         />
       </div>
       <div>
-        {" "}
         <label htmlFor="description">description :</label>
         <textarea
           required
@@ -136,9 +254,9 @@ function OldAcompanhanteCreation() {
         />
       </div>
       <div>
-        {" "}
         <label htmlFor="images">images :</label>
         <input
+          multiple
           accept="/images"
           type="file"
           id="images"
