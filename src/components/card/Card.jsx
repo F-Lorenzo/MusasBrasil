@@ -16,7 +16,7 @@ function Card({ data }) {
         </div>
         <div className="card-description">{data.description}</div>
         <div className="tags-container">
-          {tags.map((tag) => {
+          {tags.slice(0, 1).map((tag) => {
             return <div className="tag">{tag}</div>;
           })}
         </div>

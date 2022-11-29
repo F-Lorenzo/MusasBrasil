@@ -139,6 +139,16 @@ function OldAcompanhanteCreation() {
         />
       </div>
       <div>
+        <label htmlFor="cache">cache :</label>
+        <input
+          type="cache"
+          id="cache"
+          name="cache"
+          value={cache}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
         <label htmlFor="description">description :</label>
         <textarea
           rows="10"
@@ -237,6 +247,17 @@ function OldAcompanhanteCreation() {
           id="etnia"
           name="etnia"
           value={form.etnia || ""}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="cache">cache :</label>
+        <input
+          required
+          type="cache"
+          id="cache"
+          name="cache"
+          value={cache}
           onChange={handleChange}
         />
       </div>

@@ -6,17 +6,18 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import CardGrid from "../cardGrid/CardGrid";
 import "./gridContainer.css";
 import Card from "../card/Card";
 
 function GridContainer() {
   const [grid, setGrid] = useState([]);
+  const navigate = useNavigate();
   const [lowIndex, setLowIndex] = useState(0);
   const [highIndex, setHighIndex] = useState(6);
   const [page, setPage] = useState(1);
-  const { city, etnia, idade, cache } = useParams();
+  const { city, etnia } = useParams();
 
   const pagIncrement = () => {
     setLowIndex(lowIndex + 6);
@@ -34,65 +35,137 @@ function GridContainer() {
     const db = getFirestore();
 
     const itemCollection = collection(db, "Acompanhantes");
-    //city filter
-    const collectionFilteredCity = query(
-      collection(db, "Acompanhantes"),
-      where("city", "==", `${city}`)
-    );
-    //age filter
-    const collectionFilteredIdadeYunger = query(
-      collection(db, "Acompanhantes"),
-      where(`${idade}`, "<=", `24`)
-    );
-    const collectionFilteredIdadeMidle = query(
-      collection(db, "Acompanhantes"),
-      where(`${idade}`, ">", `24`, `${idade}`, "<=", `30`)
-    );
-    const collectionFilteredIdadeOld = query(
-      collection(db, "Acompanhantes"),
-      where(`${idade}`, ">", `30`)
-    );
-    //etnia filter
-    const collectionFilteredEtnia = query(
-      collection(db, "Acompanhantes"),
-      where("etnia", "==", `${etnia}`)
-    );
-    //cache filter
-    const collectionFilteredCacheCheap = query(
-      collection(db, "Acompanhantes"),
-      where(`${cache}`, "<=", `150`)
-    );
-    const collectionFilteredCacheLowMidlle = query(
-      collection(db, "Acompanhantes"),
-      where(`${cache}`, ">", `150`, `${cache}`, "<=", `250`)
-    );
-    const collectionFilteredCacheMidle = query(
-      collection(db, "Acompanhantes"),
-      where(`${cache}`, ">", `250`, `${cache}`, "<=", `400`)
-    );
-    const collectionFilteredCacheExpensive = query(
-      collection(db, "Acompanhantes"),
-      where(`${cache}`, ">", `400`)
-    );
 
-    getDocs(!city ? itemCollection : collectionFilteredCity).then(
-      (snapshot) => {
+    if (etnia) {
+      const collectionFilteredEtnia = query(
+        collection(db, "Acompanhantes"),
+        where("etnia", "==", `${etnia}`)
+      );
+
+      getDocs(collectionFilteredEtnia).then((snapshot) => {
         const fullGrid = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setGrid(fullGrid.sort(() => 0.5 - Math.random()));
-      }
-    );
-  }, [city, etnia, idade, cache]);
+      });
+    } else if (city) {
+      const collectionFilteredCity = query(
+        collection(db, "Acompanhantes"),
+        where("city", "==", `${city}`)
+      );
+
+      getDocs(collectionFilteredCity).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.sort(() => 0.5 - Math.random()));
+      });
+    } else {
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.sort(() => 0.5 - Math.random()));
+      });
+    }
+  }, [city, etnia]);
   const dataCache = [
     " R$ 0 - R$ 150,00",
-    " R$150,00 - R$250,00",
-    " R$250,00 - R$ 400,00",
+    " R$151,00 - R$250,00",
+    " R$251,00 - R$ 400,00",
     "R$ 400+",
   ];
-  const dataEtnia = ["Brancas", "orientais", " Negras", "mulatas"];
+  const dataEtnia = ["branca", "oriental", " negra", "mulata"];
   const dataIdade = ["18-24", "24-30", "30+"];
+  const dataCacheFilter = (e) => {
+    console.log(e);
+    if (e === " R$ 0 - R$ 150,00") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.filter((data) => data.cache <= 150));
+      });
+    }
+    if (e === " R$151,00 - R$250,00") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(
+          fullGrid.filter((data) => data.cache > 150 && data.cache <= 250)
+        );
+      });
+    }
+    if (e === " R$251,00 - R$ 400,00") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(
+          fullGrid.filter((data) => data.cache > 250 && data.cache <= 400)
+        );
+      });
+    }
+    if (e === "R$ 400+") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.filter((data) => data.cache > 400));
+      });
+    }
+  };
+  const dataCacheIdade = (e) => {
+    if (e === "18-24") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.filter((data) => data.idade <= 24));
+      });
+    }
+    if (e === "24-30") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.filter((data) => data.idade > 24 && data.idade <= 30));
+      });
+    }
+    if (e === "30+") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.filter((data) => data.idade > 30));
+      });
+    }
+  };
 
   const [filters, setFilters] = useState({
     anal: false,
@@ -109,40 +182,40 @@ function GridContainer() {
       <div className="filter-container">
         <div className="filter-dropdowns">
           <div className="cache">
-            <input
+            <select
               list="dataCache"
-              onChange={(e) => setCache(e.target.value)}
+              onChange={(e) => dataCacheFilter(e.target.value)}
               placeholder="Cache"
-            />
-            <datalist id="dataCache">
+            >
+              <option hidden>Cache</option>
               {dataCache.map((op) => (
-                <option>{op}</option>
+                <option value={op}>{op}</option>
               ))}
-            </datalist>
+            </select>
           </div>
           <div className="etnia">
-            <input
+            <select
               list="dataEtnia"
-              onChange={(e) => setEtnia(e.target.value)}
+              onChange={(e) => navigate(`/Acompanhantese/${e.target.value}`)}
               placeholder="Etnia"
-            />
-            <datalist id="dataEtnia">
+            >
+              <option hidden>Etnia</option>
               {dataEtnia.map((op) => (
-                <option>{op}</option>
+                <option value={op}>{op}</option>
               ))}
-            </datalist>
+            </select>
           </div>
           <div className="idade">
-            <input
+            <select
               list="dataIdade"
-              onChange={(e) => setIdade(e.target.value)}
+              onChange={(e) => dataCacheIdade(e.target.value)}
               placeholder="Idade"
-            />
-            <datalist id="dataIdade">
+            >
+              <option hidden>Idade</option>
               {dataIdade.map((op) => (
-                <option>{op}</option>
+                <option value={op}>{op}</option>
               ))}
-            </datalist>
+            </select>
           </div>
         </div>
         <div className="filter-checkbox">

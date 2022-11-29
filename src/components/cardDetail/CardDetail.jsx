@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./CardDetail.css";
-import whatsappIcon from "../../../public/whatsapp.png";
+import whatsappIcon from "../../assets/whatsapp.png";
 function CardDetail({ Acompanhante }) {
   const tags = Acompanhante.tags;
   return (
@@ -20,6 +20,7 @@ function CardDetail({ Acompanhante }) {
               {Acompanhante.name} {Acompanhante.lastname}
             </div>
             <div className="description">{Acompanhante.description}</div>
+            <div className="cache">$R{Acompanhante.cache}</div>
             <div className="contact-button">
               <a href={"https://wa.me/" + Acompanhante.phone} target="_blank">
                 send me a message

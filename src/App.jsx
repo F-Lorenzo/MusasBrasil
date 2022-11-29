@@ -20,11 +20,14 @@ function App() {
           <Routes>
             <Route path="/" element={<GridContainer />} />
             <Route path="/Acompanhante" element={<GridContainer />} />
+            <Route path="/Acompanhantes/:city" element={<GridContainer />} />
+            <Route path="/Acompanhantese/:etnia" element={<GridContainer />} />
             <Route path="/Acompanhante/:Id" element={<CardDetailContainer />} />
+            {/* 
             <Route
               path="/Acompanhante/:city?/:cache?/:idade?/:etnia?"
-              element={<CardDetailContainer />}
-            />
+              element={<GridContainer />}
+            /> */}
             <Route path="/admin" element={<SignIn />} />
             <Route
               path="/AdminPanel"

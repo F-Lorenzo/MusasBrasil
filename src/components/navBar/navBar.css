@@ -50,6 +50,35 @@
     color: white;
 }
 
+.list-items-link-input{
+    text-decoration: none;
+    color:#6A033A;
+    border: 1px solid #6A033A;
+    font-weight: bold;
+    font-size:14px;
+    width: 100px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.list-items-cidade{
+    text-align: center;
+    justify-content:top;
+    border-radius:0px;
+    border-bottom: 1px solid white;
+    background-color: #6A033A;
+    height:30px;
+    margin-bottom: 5vh;
+    padding-bottom: 2vh;
+    color: white
+}
+.list-items-cidade:hover{
+    border :#6A033A
+}
+
+.list-items-cidade span{
+    margin-top:0px
+}
+
 .anunciar{
     text-align: center;
     color:#6A033A !important;
@@ -72,6 +101,16 @@
     height:30px;
     width: 120px;
 }
+
+.anunciar a{
+    color:#6A033A
+}
+.anunciar a:hover{
+    color:white;
+}
+
+
+
 
 @media (max-width:850px) {
     .navbar{
