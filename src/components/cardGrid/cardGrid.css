@@ -10,7 +10,7 @@
 .grid{
     display:flex;
     flex-flow: wrap;
-    width:70%;
+    width:60vw;
     height:auto;
     justify-content: center;
 }

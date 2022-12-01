@@ -72,7 +72,7 @@ function OldAcompanhanteCreation() {
     const storageRef = ref(storage, `images/${name}`);
     const uploadTask = uploadBytes(storageRef, file);
     getDownloadURL(ref(storage, `images/${name}`)).then((downloadURL) => {
-      setForm({ ...form, tags: [tags], images: [downloadURL] });
+      setForm({ ...form, tags: [tags], images: downloadURL });
     });
   }, [file]);
 

@@ -73,15 +73,26 @@ function GridContainer() {
     }
   }, [city, etnia]);
   const dataCache = [
+    "Cache",
     " R$ 0 - R$ 150,00",
     " R$151,00 - R$250,00",
     " R$251,00 - R$ 400,00",
     "R$ 400+",
   ];
   const dataEtnia = ["branca", "oriental", " negra", "mulata"];
-  const dataIdade = ["18-24", "24-30", "30+"];
+  const dataIdade = ["Idade", "18-24", "24-30", "30+"];
   const dataCacheFilter = (e) => {
-    console.log(e);
+    if (e === "Cache") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.sort(() => 0.5 - Math.random()));
+      });
+    }
     if (e === " R$ 0 - R$ 150,00") {
       const db = getFirestore();
       const itemCollection = collection(db, "Acompanhantes");
@@ -132,6 +143,17 @@ function GridContainer() {
     }
   };
   const dataCacheIdade = (e) => {
+    if (e === "Idade") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.sort(() => 0.5 - Math.random()));
+      });
+    }
     if (e === "18-24") {
       const db = getFirestore();
       const itemCollection = collection(db, "Acompanhantes");
@@ -181,18 +203,6 @@ function GridContainer() {
     <div className="super-container">
       <div className="filter-container">
         <div className="filter-dropdowns">
-          <div className="cache">
-            <select
-              list="dataCache"
-              onChange={(e) => dataCacheFilter(e.target.value)}
-              placeholder="Cache"
-            >
-              <option hidden>Cache</option>
-              {dataCache.map((op) => (
-                <option value={op}>{op}</option>
-              ))}
-            </select>
-          </div>
           <div className="etnia">
             <select
               list="dataEtnia"
@@ -201,6 +211,18 @@ function GridContainer() {
             >
               <option hidden>Etnia</option>
               {dataEtnia.map((op) => (
+                <option value={op}>{op}</option>
+              ))}
+            </select>
+          </div>
+          <div className="cache">
+            <select
+              list="dataCache"
+              onChange={(e) => dataCacheFilter(e.target.value)}
+              placeholder="Cache"
+            >
+              <option hidden>Cache</option>
+              {dataCache.map((op) => (
                 <option value={op}>{op}</option>
               ))}
             </select>
