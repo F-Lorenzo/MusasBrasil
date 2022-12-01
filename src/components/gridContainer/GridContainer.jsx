@@ -285,14 +285,14 @@ function GridContainer() {
           filters.beijoGrego == false &&
           filters.podolatria == false
             ? grid
-                .slice(lowIndex, highIndex)
+                // .slice(lowIndex, highIndex)
                 .map((data) => <Card key={data.id} data={data} />)
             : grid
-                .slice(lowIndex, highIndex)
+                // .slice(lowIndex, highIndex)
                 .filter((data) => filters[data.tags])
                 .map((data) => <Card key={data.id} data={data} />)}
         </div>
-        <div className="page-handler">
+        {/* <div className="page-handler">
           <button
             className="button-page"
             disabled={lowIndex <= 0}
@@ -304,7 +304,7 @@ function GridContainer() {
           <button className="button-page" onClick={pagIncrement}>
             next page
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

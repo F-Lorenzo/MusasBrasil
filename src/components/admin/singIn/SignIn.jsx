@@ -12,7 +12,7 @@ const SignIn = () => {
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
-      user ? navigate("/AdminPanel") : navigate("/");
+      navigate("/AdminPanel");
     } catch (error) {
       console.log(error);
     }

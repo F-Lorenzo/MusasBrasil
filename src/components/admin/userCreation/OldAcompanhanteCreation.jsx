@@ -15,7 +15,17 @@ import { db } from "../../../../firebase.config.js";
 
 function OldAcompanhanteCreation() {
   const [form, setForm] = useState({});
-  const { name, lastname, city, etnia, phone, idade, description, tags } = form;
+  const {
+    name,
+    lastname,
+    city,
+    etnia,
+    phone,
+    idade,
+    description,
+    tags,
+    cache,
+  } = form;
   const [file, setFile] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -161,7 +171,7 @@ function OldAcompanhanteCreation() {
         />
       </div>
       <div>
-        <label htmlFor="images">images :</label>
+        <label htmlFor="images">image :</label>
         <input
           multiple
           accept="/images"
@@ -275,7 +285,7 @@ function OldAcompanhanteCreation() {
         />
       </div>
       <div>
-        <label htmlFor="images">images :</label>
+        <label htmlFor="images">image :</label>
         <input
           multiple
           accept="/images"
