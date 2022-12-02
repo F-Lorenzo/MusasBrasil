@@ -66,7 +66,7 @@ function GridContainer() {
     " R$251,00 - R$ 400,00",
     "R$ 400+",
   ];
-  const dataEtnia = ["Etnia", "branca", "oriental", " negra", "mulata"];
+  const dataEtnia = ["Etnia", "branca", "oriental", "negra", "mulata"];
   const dataIdade = ["Idade", "18-24", "24-30", "30+"];
   const dataEtniaFilter = (e) => {
     if (e === "Etnia") {
@@ -110,7 +110,7 @@ function GridContainer() {
           id: doc.id,
           ...doc.data(),
         }));
-        setGrid(fullGrid.filter((data) => data.etnia == " negra"));
+        setGrid(fullGrid.filter((data) => data.etnia == "negra"));
       });
     }
     if (e === "mulata") {
