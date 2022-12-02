@@ -45,7 +45,7 @@ function Navbar() {
           )}
         </li>
         <li>
-          <Link to="/Acompanhantes" className="list-items-link">
+          <Link to="/" className="list-items-link">
             ACOMPANHANTES
           </Link>
         </li>

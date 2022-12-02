@@ -77,8 +77,17 @@
         margin-top:80vh;
         margin-bottom:20vh;
         display: flex;
-        justify-content:center;
+        justify-content:flex-end;
         align-items:center;
-        flex-direction:row;
+        flex-direction:column;
+    }
+    .filter-checkbox{
+        display: flex;
+        height:5vh;
+        width:20vw;
+        justify-content:flex-end;
+        font-size:14px;
+        flex-wrap: wrap;
+        gap:4px;
     }
 }
