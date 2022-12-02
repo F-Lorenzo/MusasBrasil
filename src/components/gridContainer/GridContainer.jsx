@@ -36,20 +36,7 @@ function GridContainer() {
 
     const itemCollection = collection(db, "Acompanhantes");
 
-    if (etnia) {
-      const collectionFilteredEtnia = query(
-        collection(db, "Acompanhantes"),
-        where("etnia", "==", `${etnia}`)
-      );
-
-      getDocs(collectionFilteredEtnia).then((snapshot) => {
-        const fullGrid = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setGrid(fullGrid.sort(() => 0.5 - Math.random()));
-      });
-    } else if (city) {
+    if (city) {
       const collectionFilteredCity = query(
         collection(db, "Acompanhantes"),
         where("city", "==", `${city}`)
@@ -71,7 +58,7 @@ function GridContainer() {
         setGrid(fullGrid.sort(() => 0.5 - Math.random()));
       });
     }
-  }, [city, etnia]);
+  }, [city]);
   const dataCache = [
     "Cache",
     " R$ 0 - R$ 150,00",
@@ -79,8 +66,66 @@ function GridContainer() {
     " R$251,00 - R$ 400,00",
     "R$ 400+",
   ];
-  const dataEtnia = ["branca", "oriental", " negra", "mulata"];
+  const dataEtnia = ["Etnia", "branca", "oriental", " negra", "mulata"];
   const dataIdade = ["Idade", "18-24", "24-30", "30+"];
+  const dataEtniaFilter = (e) => {
+    if (e === "Etnia") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.sort(() => 0.5 - Math.random()));
+      });
+    }
+    if (e === "branca") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.filter((data) => data.etnia == "branca"));
+      });
+    }
+    if (e === "oriental") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.filter((data) => data.etnia == "oriental"));
+      });
+    }
+    if (e === " negra") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.filter((data) => data.etnia == " negra"));
+      });
+    }
+    if (e === "mulata") {
+      const db = getFirestore();
+      const itemCollection = collection(db, "Acompanhantes");
+      getDocs(itemCollection).then((snapshot) => {
+        const fullGrid = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setGrid(fullGrid.filter((data) => data.etnia == "mulata"));
+      });
+    }
+  };
+
   const dataCacheFilter = (e) => {
     if (e === "Cache") {
       const db = getFirestore();
@@ -206,7 +251,7 @@ function GridContainer() {
           <div className="etnia">
             <select
               list="dataEtnia"
-              onChange={(e) => navigate(`/Acompanhantese/${e.target.value}`)}
+              onChange={(e) => dataEtniaFilter(e.target.value)}
               placeholder="Etnia"
             >
               <option hidden>Etnia</option>

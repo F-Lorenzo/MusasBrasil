@@ -21,7 +21,6 @@ function App() {
             <Route path="/" element={<GridContainer />} />
             <Route path="/Acompanhante" element={<GridContainer />} />
             <Route path="/Acompanhantes/:city" element={<GridContainer />} />
-            <Route path="/Acompanhantese/:etnia" element={<GridContainer />} />
             <Route path="/Acompanhante/:Id" element={<CardDetailContainer />} />
             {/* 
             <Route
