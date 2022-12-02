@@ -113,6 +113,9 @@
 
 
 @media (max-width:850px) {
+    *{
+        text-decoration: none;
+    }
     .navbar{
         display:flex;
         flex-direction: column;

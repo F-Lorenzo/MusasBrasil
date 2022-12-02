@@ -154,7 +154,7 @@
         align-items:center;
         width: 100%;
         height:auto;
-        margin: 70vh 0px 0px 0px;
+        margin: 100vh 0px 0px 0px;
     }
     .card-detail{
         display:flex;
@@ -188,6 +188,7 @@
         flex-direction: column;
         margin: 0 auto;
     }
+    
     .tags-list{
         display:flex;
         justify-content:flex-start;
