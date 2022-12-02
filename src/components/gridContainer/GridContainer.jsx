@@ -102,7 +102,7 @@ function GridContainer() {
         setGrid(fullGrid.filter((data) => data.etnia == "oriental"));
       });
     }
-    if (e === " negra") {
+    if (e === "negra") {
       const db = getFirestore();
       const itemCollection = collection(db, "Acompanhantes");
       getDocs(itemCollection).then((snapshot) => {
